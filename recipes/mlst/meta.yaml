@@ -1,37 +1,36 @@
-{% set name = "mlst" %}
-{% set version = "2.11" %}
+{% set version = "2.15.2" %}
+{% set sha256 = "bc2ca70640dac4809b7749b80ef66d49c3459f9d4d3524f69ae55a01d79953a9" %}
 
 package:
-  name: {{ name }}
-  version: {{ version }}
+  name: mlst
+  version: '{{ version }}'
+
+source:
+  url: https://github.com/tseemann/mlst/archive/v{{ version }}.tar.gz
+  sha256: '{{ sha256 }}'
 
 build:
   number: 0
-  # OSX failing due to problems with perl-list-moreutils and bioperl
-  skip: true # [osx]
-
-source:
-  url: https://github.com/tseemann/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: fcb403e3563b68119359235c984ce65e4604056a0678699ac559294fc2224086
 
 requirements:
   run:
-    - perl
-    - perl-bioperl
+    - blast >=2.7.1
+    - perl-bioperl >=1.7.2
     - perl-moo
     - perl-list-moreutils
     - perl-json
-    - blast
     - zlib
 
 test:
   commands:
     - mlst --version
+    - mlst --check
     - mlst --list 2>&1 | grep leptospira > /dev/null
 
 about:
   home: https://github.com/tseemann/mlst
-  license: GPL2
+  license: GPL-2.0
+  license_family: GPL
   license_file: LICENSE
   summary: Scan contig files against PubMLST typing schemes
 
