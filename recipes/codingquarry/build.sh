@@ -1,21 +1,7 @@
 #!/bin/sh
 
-#modify makefile to use correct compiler c++
-sed -i.bak -e 's/\${CC}/${CXX}/g' -e 's/\${CFLAGS}/${CXXFLAGS}/g' makefile
-
-CXXFLAGS="$CXXFLAGS"
-LDFLAGS="$LDFLAGS"
-if [ "$(uname)" == Darwin ] ; then
-    CXXFLAGS="$CXXFLAGS -Wl,-rpath ${PREFIX}/lib -L${PREFIX}/lib -I${PREFIX}/include -fopenmp"
-    LDFLAGS="$LDFLAGS -stdlib=libc++"
-    CXX=clang++
-else
-	CXXFLAGS="$CXXFLAGS -fopenmp -g -O3"
-	CXX=g++
-fi
-
 #now build
-make CXX="${CXX}" CXXFLAGS="${CXXFLAGS}"
+make
 
 #link
 mkdir -p $PREFIX/bin

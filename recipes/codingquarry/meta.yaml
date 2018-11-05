@@ -12,11 +12,10 @@ source:
 
 build:
   number: 0
-  skip: True # [osx]
 
 requirements:
   build:
-    - {{ compiler('cxx') }}
+    - {{ compiler('c') }}
     - llvm-openmp # [osx]
     - python
   host:
